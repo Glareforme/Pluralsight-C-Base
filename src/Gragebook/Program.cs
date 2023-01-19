@@ -5,17 +5,16 @@ namespace Gragebook
 {
     class Program
     {
+        static Book book = new Book("Test");
+        static Random random = new Random();
         static void Main(string[] args)
         {
-            var random = new Random();
-            var result = 0.0;
-            var grade = new List<double> { 1.3, 13.3, 3, 10.3 };
-            grade.Add(random.Next(1, 10));
+            book.AddGrade(13.3);
+            book.AddGrade(0.1);
+            book.AddGrade(10.1);
+            book.AddGrade(4.44);
+            book.AddGrade(random.Next(1, 20));
 
-            foreach (var number in grade)
-            {
-                result += number;
-            }
             try
             {
                 Console.WriteLine($"Hello, {args[0]}");
@@ -28,10 +27,7 @@ namespace Gragebook
             {
                 Console.WriteLine("Start program");
             }
-
-            Console.WriteLine("The average grade is " + result / grade.Count);
-            System.Console.WriteLine($"Just result {result}");
-            System.Console.WriteLine($"Result {result:N1} with fixed numbers after comma");
+            book.ShowStatistics();
         }
     }
 }
