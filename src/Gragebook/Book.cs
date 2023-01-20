@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace Gragebook
 {
     public class Book
@@ -5,10 +8,10 @@ namespace Gragebook
         public Book(string name)
         {
             grades = new List<double>();
-            this.name = name;
+            Name = name;
         }
 
-        private string name;
+        public string Name;
         private List<double> grades;
 
         public void AddGrade(double grade)
