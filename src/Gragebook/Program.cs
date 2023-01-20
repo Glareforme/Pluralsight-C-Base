@@ -27,7 +27,11 @@ namespace Gragebook
             {
                 Console.WriteLine("Start program");
             }
-            book.ShowStatistics();
+            var statistics = book.GetStatistics();
+
+            System.Console.WriteLine($"The average grade is {statistics.Average:N1}");
+            System.Console.WriteLine($"The highest grade is {statistics.High}");
+            System.Console.WriteLine($"The lowest grade is {statistics.Low}");
         }
     }
 }

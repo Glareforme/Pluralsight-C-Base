@@ -1,6 +1,6 @@
 namespace Gragebook
 {
-    class Book
+    public class Book
     {
         public Book(string name)
         {
@@ -16,22 +16,21 @@ namespace Gragebook
             this.grades.Add(grade);
         }
 
-        public void ShowStatistics()
+        public Statistics GetStatistics()
         {
-            var result = 0.0;
-            var highestGrade = double.MinValue;
-            var lowestGrade = double.MaxValue;
+            var result = new Statistics();
+            result.Average = 0.0;
+            result.High = double.MinValue;
+            result.Low = double.MaxValue;
 
-             foreach (var number in grades)
+            foreach (var number in grades)
             {
-                lowestGrade = Math.Min(number, lowestGrade);
-                highestGrade = Math.Max(number, highestGrade);
-                result += number;
+                result.Low = Math.Min(number, result.Low);
+                result.High = Math.Max(number, result.High);
+                result.Average += number;
             }
-
-            System.Console.WriteLine("The lowest grade is " + lowestGrade);
-            System.Console.WriteLine("The highest grade is " + highestGrade);
-            Console.WriteLine($"The average grade is {result / grades.Count:N1}");
+            result.Average /= grades.Count;
+            return result;
         }
     }
 }
