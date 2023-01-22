@@ -6,22 +6,25 @@ public class GradebookUnitTests
 {
     Book book = new Book("Test");
     [Fact]
-    public void Test1()
+    public void GradebookCalculateCorrect()
     {
-        book.AddGrade(10.1);
-        book.AddGrade(0.1);
-        book.AddGrade(20);
+        book.AddGrade(50.0);
+        book.AddGrade(60.0);
+        book.AddGrade(70);
+        book.AddGrade(80);
 
         var actualResult = book.GetStatistics();
 
         var expectedResult = new Statistics()
         {
-            Average = 6.7,
-            Low = 0.1,
-            High = 10.1
+            Average = 65,
+            Low = 50.0,
+            High = 80,
+            Letter = 'D'
         };
-        Assert.Equal(actualResult.Average, actualResult.Average, 1);
-        Assert.Equal(actualResult.High, actualResult.High, 1);
-        Assert.Equal(actualResult.Low, expectedResult.Low, 1);
+        Assert.Equal(expectedResult.Average, actualResult.Average, 1);
+        Assert.Equal(expectedResult.High, actualResult.High, 1);
+        Assert.Equal(expectedResult.Low, actualResult.Low, 1);
+        Assert.Equal(expectedResult.Letter, actualResult.Letter);
     }
 }
