@@ -14,5 +14,7 @@ namespace Gragebook
         {
             throw new NotImplementedException();
         }
+        public abstract void DeleteFileAfterWork();
+
     }
 }

@@ -13,11 +13,19 @@ namespace Gragebook
 
             using (var writer = File.AppendText($"{Name}.txt"))
             {
-                writer.WriteLine(grade);
-                if (GradeAdded != null)
+                if (grade <= 100 && grade > 0)
                 {
-                    GradeAdded(this, new EventArgs());
+                    writer.WriteLine(grade);
+                    if (GradeAdded != null)
+                    {
+                        GradeAdded(this, new EventArgs());
+                    }
                 }
+                else
+                {
+                    throw new ArgumentException($"Invalid {nameof(grade)}");
+                }
+
             }
         }
 
@@ -35,6 +43,11 @@ namespace Gragebook
                 }
             }
             return result;
+        }
+
+        public override void DeleteFileAfterWork()
+        {
+            File.Delete($"{Name}.txt");
         }
     }
 }

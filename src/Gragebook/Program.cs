@@ -5,7 +5,8 @@ namespace Gragebook
 {
     class Program
     {
-        static IBook book = new DiskBook("Test");
+        static DiskBook book = new DiskBook("Test");
+ 
 
         static Random random = new Random();
 
@@ -19,6 +20,7 @@ namespace Gragebook
             var statistics = book.GetStatistics();
 
             DisplayStatistics(statistics);
+            book.DeleteFileAfterWork();
         }
 
         private static void DisplayStatistics(Statistics statistics)
