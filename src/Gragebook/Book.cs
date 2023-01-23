@@ -5,17 +5,22 @@ namespace Gragebook
 {
     public class Book
     {
+        public delegate void GradeAddedDelegate(object sender, EventArgs args);
+
         Random random = new Random();
         public Book(string name)
         {
+            // One = 2; can change 
             grades = new List<double>();
             Name = name;
         }
 
         public string Name;
+
         private List<double> grades;
         public void AddLetterGrade(char letter)
         {
+            // One = 2; cant change 
             switch (letter)
             {
                 case 'A':
@@ -47,12 +52,17 @@ namespace Gragebook
             if (grade <= 100 && grade >= 0)
             {
                 this.grades.Add(grade);
+                if(GradeAdded != null){
+                    GradeAdded(this, new EventArgs());
+                }
             }
             else
             {
                 throw new ArgumentException($"Invalid {nameof(grade)}");
             }
         }
+
+        public event GradeAddedDelegate GradeAdded;
 
         public Statistics GetStatistics()
         {
@@ -66,7 +76,7 @@ namespace Gragebook
             {
                 do
                 {
-                    if (grades[indexer] == 23.5)
+                    if (grades[indexer] == 0.5)
                     {
                         continue;
                     }
@@ -74,7 +84,7 @@ namespace Gragebook
                     {
                         break;
                     }
-                    else if (grades[indexer] == 1231231.3)
+                    else if (grades[indexer] == 0.1)
                     {
                         goto done;
                     }
@@ -112,5 +122,22 @@ namespace Gragebook
         done:
             return result;
         }
+
+        #region Example 
+        public string Dsa
+        {
+            get
+            {
+                return dsa;
+            }
+            set
+            {
+                dsa = value;
+            }
+        }
+        private string dsa;
+
+        readonly int One = 1;
+        #endregion
     }
 }

@@ -2,8 +2,13 @@ using Gragebook;
 
 namespace Gradebook.Tests;
 
+public delegate string WriteLogMessage(string logMessage);
+
 public class TypeUnitTests
 {
+    int count = 0;
+    WriteLogMessage logMessage;
+
     #region Tests
     [Fact]
     public void TheBooksReturnsDifferentObjects()
@@ -89,9 +94,32 @@ public class TypeUnitTests
         Assert.Equal("Gaga", name);
         Assert.Equal("GAGA", NewName);
     }
+
+    [Fact]
+    public void DelegateWorksCorrect()
+    {
+        logMessage += ReturnMessage; 
+        logMessage += ReturnDataTime;
+        var result = logMessage("dsada");
+
+        Assert.NotEqual("dsada", result);
+        Assert.Equal(2, count);
+    }
+
     #endregion
 
     #region Methods
+    string ReturnMessage(string logs)
+    {
+        count++;
+        return logs;
+    }
+
+    string ReturnDataTime(string s)
+    {
+        count++;
+        return DateTime.Today.ToString();
+    }
     private void TryMakeUpperCase(string param)
     {
         param.ToUpper();
