@@ -145,24 +145,24 @@ public class TypeUnitTests
         integer = 32;
     }
 
-    private void SetBookToOtherBook(ref Book book, string newName)
+    private void SetBookToOtherBook(ref InMemoryBook book, string newName)
     {
-        book = new Book(newName);
+        book = new InMemoryBook(newName);
     }
 
-    private void SetBookToOtherBook(Book book, string newName)
+    private void SetBookToOtherBook(InMemoryBook book, string newName)
     {
-        book = new Book(newName);
+        book = new InMemoryBook(newName);
     }
 
-    private void SetName(Book book, string newName)
+    private void SetName(InMemoryBook book, string newName)
     {
         book.Name = newName;
     }
 
-    private Book GetBook(string name)
+    private InMemoryBook GetBook(string name)
     {
-        return new Book(name);
+        return new InMemoryBook(name);
     }
     #endregion
 }

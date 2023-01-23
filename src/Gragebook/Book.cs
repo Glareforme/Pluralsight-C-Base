@@ -3,21 +3,20 @@ using System.Collections.Generic;
 
 namespace Gragebook
 {
-    public class Book
-    {
-        public delegate void GradeAddedDelegate(object sender, EventArgs args);
+    public delegate void GradeAddedDelegate(object sender, EventArgs args);
 
+    public class InMemoryBook : BookBase
+    {
         Random random = new Random();
-        public Book(string name)
+        public InMemoryBook(string name) : base(name)
         {
             // One = 2; can change 
             grades = new List<double>();
             Name = name;
         }
 
-        public string Name;
-
         private List<double> grades;
+
         public void AddLetterGrade(char letter)
         {
             // One = 2; cant change 
@@ -47,12 +46,14 @@ namespace Gragebook
                     break;
             }
         }
-        public void AddGrade(double grade)
+
+        public override void AddGrade(double grade)
         {
             if (grade <= 100 && grade >= 0)
             {
                 this.grades.Add(grade);
-                if(GradeAdded != null){
+                if (GradeAdded != null)
+                {
                     GradeAdded(this, new EventArgs());
                 }
             }
@@ -62,64 +63,22 @@ namespace Gragebook
             }
         }
 
-        public event GradeAddedDelegate GradeAdded;
+        public override event GradeAddedDelegate GradeAdded;
 
-        public Statistics GetStatistics()
+        public override Statistics GetStatistics()
         {
             var result = new Statistics();
             var indexer = 0;
 
-            result.Average = 0.0;
-            result.High = double.MinValue;
-            result.Low = double.MaxValue;
             if (grades.Count != 0)
             {
                 do
                 {
-                    if (grades[indexer] == 0.5)
-                    {
-                        continue;
-                    }
-                    else if (grades[indexer] == 99.9)
-                    {
-                        break;
-                    }
-                    else if (grades[indexer] == 0.1)
-                    {
-                        goto done;
-                    }
-                    result.Low = Math.Min(grades[indexer], result.Low);
-                    result.High = Math.Max(grades[indexer], result.High);
-                    result.Average += grades[indexer];
+                    result.Add(grades[indexer]);
                     indexer++;
                 } while (indexer < grades.Count);
             }
-            result.Average /= grades.Count;
 
-            switch (result.Average)
-            {
-                case var d when d >= 90.0:
-                    result.Letter = 'A';
-                    break;
-                case var d when d >= 80.0:
-                    result.Letter = 'B';
-                    break;
-                case var d when d >= 70.0:
-                    result.Letter = 'C';
-                    break;
-                case var d when d >= 60.0:
-                    result.Letter = 'D';
-                    break;
-                case var d when d >= 50.0:
-                    result.Letter = 'E';
-                    break;
-                default:
-                    result.Letter = 'F';
-                    break;
-
-            }
-
-        done:
             return result;
         }
 

@@ -5,25 +5,32 @@ namespace Gragebook
 {
     class Program
     {
-        static Book book = new Book("Test");
+        static IBook book = new DiskBook("Test");
+
         static Random random = new Random();
+
         static void Main(string[] args)
         {
-            try
-            {
-                Console.WriteLine($"Hello, {args[0]}");
-            }
-            catch (System.IndexOutOfRangeException)
-            {
-                Console.WriteLine($"Hello, noname");
-            }
-            finally
-            {
-                Console.WriteLine("Start program");
-            }
+            HelloMessage(args);
 
             book.GradeAdded += OnGradeAdded;
-            
+            EnterGrade();
+
+            var statistics = book.GetStatistics();
+
+            DisplayStatistics(statistics);
+        }
+
+        private static void DisplayStatistics(Statistics statistics)
+        {
+            System.Console.WriteLine($"The average grade is {statistics.Average:N1}");
+            System.Console.WriteLine($"The highest grade is {statistics.High}");
+            System.Console.WriteLine($"The lowest grade is {statistics.Low}");
+            System.Console.WriteLine($"The letter grade is {statistics.Letter}");
+        }
+
+        private static void EnterGrade()
+        {
             while (true)
             {
                 System.Console.WriteLine("Enter a grade or 'q' to quit");
@@ -47,14 +54,22 @@ namespace Gragebook
                     System.Console.WriteLine(ex.Message);
                 }
             }
+        }
 
-
-            var statistics = book.GetStatistics();
-
-            System.Console.WriteLine($"The average grade is {statistics.Average:N1}");
-            System.Console.WriteLine($"The highest grade is {statistics.High}");
-            System.Console.WriteLine($"The lowest grade is {statistics.Low}");
-            System.Console.WriteLine($"The letter grade is {statistics.Letter}");
+        private static void HelloMessage(string[] args)
+        {
+            try
+            {
+                Console.WriteLine($"Hello, {args[0]}");
+            }
+            catch (System.IndexOutOfRangeException)
+            {
+                Console.WriteLine($"Hello, noname");
+            }
+            finally
+            {
+                Console.WriteLine("Start program");
+            }
         }
 
         static void OnGradeAdded(object sender, EventArgs e)
